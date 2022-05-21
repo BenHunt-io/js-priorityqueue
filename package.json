@@ -1,0 +1,22 @@
+{
+  "name": "js-priorityqueue",
+  "version": "1.0.0",
+  "description": "A priority queue implemented with a heap",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenHunt-io/js-priorityqueue.git"
+  },
+  "author": "Ben Hunt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BenHunt-io/js-priorityqueue/issues"
+  },
+  "homepage": "https://github.com/BenHunt-io/js-priorityqueue#readme",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
