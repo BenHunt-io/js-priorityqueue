@@ -2,7 +2,9 @@ class MinHeap {
 
     heap = [0];
 
-    constructor(...values){
+    constructor(values = [], getter){
+        // extracts the value to be used for sorting
+        this.getter = getter;
         // Construct min heap
         for(let val of values){
             this.insert(val);
@@ -30,16 +32,18 @@ class MinHeap {
         let leftChild = this.getLeftChild(parentIdx);
         let rightChild = this.getRightChild(parentIdx);
 
+
         // Reheap tree
-        while((leftChild <= this.size() && this.heap[parentIdx] > this.heap[leftChild]) 
-            || (rightChild <= this.size() && this.heap[parentIdx] > this.heap[rightChild])){
+        while((leftChild <= this.size() && this.getValue(this.heap[parentIdx]) > this.getValue(this.heap[leftChild])) 
+            || (rightChild <= this.size() && this.getValue(this.heap[parentIdx]) > this.getValue(this.heap[rightChild]))){
 
             let minChild = leftChild;
             if(rightChild <= this.size()){
-                minChild = Math.min(this.heap[leftChild], this.heap[rightChild]) == this.heap[leftChild] ? leftChild : rightChild;
+                minChild = Math.min(this.getValue(this.heap[leftChild]), this.getValue(this.heap[rightChild])) 
+                    == this.getValue(this.heap[leftChild]) ? leftChild : rightChild;
             }
 
-            if(this.heap[parentIdx] > this.heap[minChild]){
+            if(this.getValue(this.heap[parentIdx]) > this.getValue(this.heap[minChild])){
                 this.swap(parentIdx, minChild);
                 parentIdx = minChild;
             }
@@ -56,7 +60,7 @@ class MinHeap {
         let childIdx = size+1;
         let parentIdx = this.getParent(childIdx);
 
-        while(parentIdx >= 1 && this.heap[parentIdx] > this.heap[childIdx]){
+        while(parentIdx >= 1 && this.getValue(this.heap[parentIdx]) > this.getValue(this.heap[childIdx])){
 
             let tmp = this.heap[parentIdx];
             this.heap[parentIdx] = this.heap[childIdx];
@@ -69,22 +73,27 @@ class MinHeap {
         this.heap[0]++;
     }
 
+    // private
     // returns idx of parent
     getParent(childIndex){
         return childIndex % 2 == 0 ? childIndex/2 : (childIndex+1)/2-1;
 
     }
 
+    // private
     getLeftChild(parentIdx){
         return parentIdx*2;
     }
 
+    // private
     getRightChild(parentIdx){
         return parentIdx*2+1;
     }
 
     toString(){
-        return this.heap.slice(1, this.size()+1).toString();
+        return this.heap.slice(1, this.size()+1)
+            .map(val => this.getValue(val, this.getter))
+            .toString();
     }
 
     size(){
@@ -95,6 +104,18 @@ class MinHeap {
         let tmp = this.heap[idx];
         this.heap[idx] = this.heap[idxOther];
         this.heap[idxOther] = tmp;
+    }
+
+    // private
+    getValue(val){
+        this.getValue(val, this.getter);
+    }
+
+    getValue(val, getter){
+        if(getter){
+            return getter(val);
+        }
+        return val;
     }
 }
 
