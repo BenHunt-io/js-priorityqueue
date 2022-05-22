@@ -80,3 +80,28 @@ test("Construct empty heap with mapping function", () => {
 
 });
 
+test("Convert heap to array with objects for node values", () => {
+
+    let calorieMap = new Map([
+        ["pizza", 260],
+        ["chips", 100],
+        ["cookie", 150]
+    ]);
+
+    let entries = [];
+    for(let entry of calorieMap){
+        entries.push(entry);
+    }
+
+    let heap = new MinHeap(entries, entry => entry[1]);
+
+    let arr = heap.toArray();
+    expect(heap.toArray()).toStrictEqual([["chips",100],["pizza",260],["cookie",150]]);
+});
+
+test("Populate heap with duplicate values", () => {
+    let heap = new MinHeap([[4,1],[1,1],[-1,2]], entry => entry[1]);
+
+    expect(heap.toArray()).toStrictEqual([[1,1],[4,1],[-1,2]]);
+    expect(heap.front()).toStrictEqual([1,1]);
+})

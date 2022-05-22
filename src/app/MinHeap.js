@@ -62,7 +62,7 @@ class MinHeap {
         let childIdx = size+1;
         let parentIdx = this.getParent(childIdx);
 
-        while(parentIdx >= 1 && this.getValue(this.heap[parentIdx]) > this.getValue(this.heap[childIdx])){
+        while(parentIdx >= 1 && this.getValue(this.heap[parentIdx]) >= this.getValue(this.heap[childIdx])){
 
             let tmp = this.heap[parentIdx];
             this.heap[parentIdx] = this.heap[childIdx];
@@ -98,6 +98,10 @@ class MinHeap {
             .toString();
     }
 
+    toArray(){
+        return this.heap.slice(1, this.size()+1);
+    }
+
     size(){
         return this.heap[0];
     }
@@ -110,10 +114,10 @@ class MinHeap {
 
     // private
     getValue(val){
-        this.getValue(val, this.getter);
+        return this.getValueWith(val, this.getter);
     }
 
-    getValue(val, getter){
+    getValueWith(val, getter){
         if(getter){
             return getter(val);
         }
