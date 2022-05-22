@@ -47,7 +47,7 @@ test("Delete all elements", () => {
 });
 
 
-test("Use heap with a mapping function", () => {
+test("Construct heap with a mapping function and values", () => {
 
     let calorieMap = new Map([
         ["pizza", 260],
@@ -64,3 +64,19 @@ test("Use heap with a mapping function", () => {
 
     expect(heap.toString()).toBe("100,260,150");
 });
+
+test("Construct empty heap with mapping function", () => {
+
+    let heap = new MinHeap([], entry => entry[1]);
+    let entry = new Map([["age", 26]]).entries().next().value;
+    let entryOther = new Map([["age", 30]]).entries().next().value;
+    let entrySmallest = new Map([["age", 20]]).entries().next().value;
+
+    heap.insert(entry);
+    heap.insert(entryOther);
+    heap.insert(entrySmallest);
+
+    expect(heap.toString()).toBe("20,30,26");
+
+});
+

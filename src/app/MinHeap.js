@@ -2,12 +2,14 @@ class MinHeap {
 
     heap = [0];
 
-    constructor(values = [], getter){
+    constructor(values=[], getter){
         // extracts the value to be used for sorting
         this.getter = getter;
         // Construct min heap
-        for(let val of values){
-            this.insert(val);
+        if(values){
+            for(let val of values){
+                this.insert(val);
+            }
         }
     }
 
